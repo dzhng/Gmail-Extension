@@ -15,21 +15,36 @@
 }
 
 #tvComposeButton:hover {
-	background-color: #FF9A11;
 	color: #000;
+	cursor: pointer;
 }
 
 #tvReplyButton {
+	background-color: #F08A01;
+	background-image: none;
+	color: #333;
+}
+#tvReplyButton:hover {
+	color: #000;
+	cursor: pointer;
 }
 
 #tvTopButton {
+	background-color: #F08A01;
+	background-image: none;
+	color: #333;
 }
 #tvTopButton:hover {
-	color: #FFF:
+	color: #000;
+	cursor: pointer;
 }
 
 #tvConversationButton {
+	background-color: #F08A01;
+	background-image: none;
+	color: #333;
 }
-#tvCOnversationButton:hover {
-	color: #FFF;
+#tvConversationButton:hover {
+	color: #000;
+	cursor: pointer;
 }
