@@ -10,7 +10,7 @@ Gmailr.init(function(G) {
 	var topBtn = G.insertTopButton('Tigervine');
 
     var status = function(msg) {
-        G.$('#gmailr #status').html(msg);
+        G.$('#tvHeader #status').html(msg);
     };
 
     G.observe('archive', function(num) {
