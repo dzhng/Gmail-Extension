@@ -1,0 +1,35 @@
+#gmailr {
+    color: #333;
+    font-family: Arial;
+    background: #DDE5FF;
+    padding: 6px 7px 5px 9px;
+    border-bottom: 1px solid #C9D7F1;
+    margin-bottom: 1px;
+    position: relative;
+}
+
+#tvComposeButton {
+	background-color: #F08A01;
+	background-image: none;
+	color: #333;
+}
+
+#tvComposeButton:hover {
+	background-color: #FF9A11;
+	color: #000;
+}
+
+#tvReplyButton {
+}
+
+#tvTopButton {
+}
+#tvTopButton:hover {
+	color: #FFF:
+}
+
+#tvConversationButton {
+}
+#tvCOnversationButton:hover {
+	color: #FFF;
+}
