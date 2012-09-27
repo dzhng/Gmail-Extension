@@ -4,7 +4,7 @@ Gmailr.debug = true; // Turn verbose debugging messages on
 // main insertion point
 Gmailr.init(function(G) {
     G.insertCss(getData('css_path'));
-    G.insertTop($("<div id='gmailr'><span>Gmailr Status:</span> <span id='status'>Loaded.</span></div>"));
+    G.insertTop($("<div id='Tigervine'><span>Gmailr Status:</span> <span id='status'>Loaded.</span></div>"));
 
 	// we only need to insert the top button once, since it just stays hidden in other states
 	var topBtn = G.insertTopButton('Tigervine');
