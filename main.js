@@ -46,18 +46,12 @@ $(function() {
 			break;
 		case 'reply':
 			// we want to wait a bit before inserting, since DOM needs some time to load
-			G.insertReplyButton('Send to List', function(el) {
-				el.click(function() {
-					if(editor) {
-						editor.updateListButton(el);
-					}
-				});
-			});
+			//G.insertReplyButton('Send to List', function(el) {});
 			this.handleEdit();
 			break;
 		case 'conversation':
 			// we want to wait a bit before inserting, since DOM needs some time to load
-			G.insertConversationButton('Conversation', null);
+			//G.insertConversationButton('Conversation', null);
 			break;
 		}
 	}).bind(this));
