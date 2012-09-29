@@ -8,6 +8,7 @@ $(function() {
 
 	var G = new Gmailr();
 	G.insertCss(getData('css_path'));
+	G.insertCss(getData('common_css_path'));
 
 	// we only need to insert the top button once, since it just stays hidden in other states
 	var topBtn = G.insertTopButton('Tigervine');
@@ -49,7 +50,15 @@ $(function() {
 
 	// handle when gmail is in editor mode
 	this.handleEdit = function() {
-		var textarea = G.$('.M9 .editable').contents().find('body');
-		var editor = new Editor(textarea);
+		// keep trying until we got the text area
+		G.wait('.M9 .editable', function(el) {
+			var textarea = el.contents().find('body');
+			var editor = new Editor(textarea);
+			G.insertEditRow('Labels', function(el) {
+				// set the label element in editor so it can start creating labels
+				editor.labelEl = el;
+				editor.update();	// update once, just in case if theres already some text in there
+			});
+		});
 	}
 });
