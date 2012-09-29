@@ -16,5 +16,5 @@
     "http://*/"
   ],
   "manifest_version" : 2,
-  "web_accessible_resources" : [ "lib/bootstrap.js", "lib/gmailr.js", "lib/init.js", "lib/jquery.js", "lib/jquery.ba-bbq.js", "lib/lab.js", "style.css", "main.js"]
+  "web_accessible_resources" : [ "lib/bootstrap.js", "lib/gmailr.js", "lib/init.js", "lib/jquery.js", "lib/jquery.ba-bbq.js", "lib/lab.js", "style.css", "editor.js", "main.js"]
 }

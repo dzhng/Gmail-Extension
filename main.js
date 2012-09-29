@@ -1,89 +1,55 @@
+// enable strict mode
+"use strict";
 
-Gmailr.debug = true; // Turn verbose debugging messages on 
+window.debug = true; // Turn verbose debugging messages on 
 
 // main insertion point
-Gmailr.init(function(G) {
-    G.insertCss(getData('css_path'));
-    G.insertTop($("<div id='tvHeader'><span>Tigervine Status:</span> <span id='status'>Loaded.</span></div>"));
+$(function() {
+
+	var G = new Gmailr();
+	G.insertCss(getData('css_path'));
 
 	// we only need to insert the top button once, since it just stays hidden in other states
 	var topBtn = G.insertTopButton('Tigervine');
 
-    var status = function(msg) {
-        G.$('#tvHeader #status').html(msg);
-    };
+	G.observe('send', (function(text) {
+	}).bind(this));
 
-    G.observe('archive', function(num) {
-        status('You just archived ' + num + ' emails.');
-    });
+	G.observe('reply', (function(text) {
+	}).bind(this));
 
-    G.observe('delete', function(c) {
-        status('You deleted ' + c + ' emails.');
-    });
-
-    G.observe('spam', function(c) {
-        status('You marked ' + c + ' emails as spam.');
-    });
-
-    G.observe('send', function(text) {
-        status('You sent an email.');
-    });
-
-    G.observe('reply', function(text) {
-        status('You replied to an email.');
-    });
-
-    G.observe('applyLabel', function(label,emails) {
-       status("you applied label " + label + " to " + emails.length + " email(s)");
-    });
-
-	G.observe('viewChanged', function(view) {
-		status("View changed to " + view);
-
+	G.observe('viewChanged', (function(view) {
 		// insert additional functions based on view
-		var btn = null;
-		switch(view) {
+		switch(view) 
+		{
 		case 'threaded':
 			if(!topBtn) {
 				// we want to wait a bit before inserting, since DOM needs some time to load
-				var i = setInterval(function() {
-					if((topBtn = G.insertTopButton('Tigervine')) != null) {
-						clearInterval(i);
-					}
-				}, 100);
+				G.insertTopButton('Tigervine', function(el) {
+					topBtn = el;
+				});
 			}
 			break;
 		case 'compose':
 			// we want to wait a bit before inserting, since DOM needs some time to load
-			var i = setInterval(function() {
-				if((btn = G.insertComposeButton('Compose')) != null) {
-					clearInterval(i);
-				}
-			}, 100);
+			G.insertComposeButton('Compose', null);
+			this.handleEdit();
 			break;
 		case 'reply':
 			// we want to wait a bit before inserting, since DOM needs some time to load
-			var i = setInterval(function() {
-				if((btn = G.insertReplyButton('Reply')) != null) {
-					clearInterval(i);
-
-					btn.click(function(e) {
-						console.log('reply button clicked');
-					});
-				}
-			}, 100);
+			G.insertReplyButton('Reply', null);
+			this.handleEdit();
 			break;
 		case 'conversation':
 			// we want to wait a bit before inserting, since DOM needs some time to load
-			var i = setInterval(function() {
-				if((btn = G.insertConversationButton('Conversation')) != null) {
-					clearInterval(i);
-					btn.click(function(e) {
-						console.log('conversation button clicked');
-					});
-				}
-			}, 100);
+			G.insertConversationButton('Conversation', null);
 			break;
 		}
-	});
+	}).bind(this));
+
+	// handle when gmail is in editor mode
+	this.handleEdit = function() {
+		var textarea = G.$('.M9 .editable').contents().find('body');
+		var editor = new Editor(textarea);
+	}
 });
