@@ -45,7 +45,12 @@ Gmailr.init(function(G) {
 		switch(view) {
 		case 'threaded':
 			if(!topBtn) {
-				topBtn = G.insertTopButton('Tigervine');
+				// we want to wait a bit before inserting, since DOM needs some time to load
+				var i = setInterval(function() {
+					if((topBtn = G.insertTopButton('Tigervine')) != null) {
+						clearInterval(i);
+					}
+				}, 100);
 			}
 			break;
 		case 'compose':
@@ -57,16 +62,27 @@ Gmailr.init(function(G) {
 			}, 100);
 			break;
 		case 'reply':
-			btn = G.insertReplyButton('Reply');
-			btn.click(function(e) {
-				console.log('reply button clicked');
-			});
+			// we want to wait a bit before inserting, since DOM needs some time to load
+			var i = setInterval(function() {
+				if((btn = G.insertReplyButton('Reply')) != null) {
+					clearInterval(i);
+
+					btn.click(function(e) {
+						console.log('reply button clicked');
+					});
+				}
+			}, 100);
 			break;
 		case 'conversation':
-			btn = G.insertConversationButton('Conversation');
-			btn.click(function(e) {
-				console.log('conversation button clicked');
-			});
+			// we want to wait a bit before inserting, since DOM needs some time to load
+			var i = setInterval(function() {
+				if((btn = G.insertConversationButton('Conversation')) != null) {
+					clearInterval(i);
+					btn.click(function(e) {
+						console.log('conversation button clicked');
+					});
+				}
+			}, 100);
 			break;
 		}
 	});
