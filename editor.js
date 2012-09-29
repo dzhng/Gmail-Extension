@@ -2,17 +2,50 @@
 "use strict";
 
 // editor object
-var Editor = function(el) 
+var Editor = function(el, gmailr) 
 {
+	this.gmailr = gmailr;
 	this.canvas = el;		// the entire text area
 
 	this.controller = new EditorController(this);
 	this.view = new EditorView(this);
 
 	this.labelEl = null;	// the div that stores the labels
+	this.rowEl = null;		// the div that contains the entire injected row
 	this.labels = [];		// array of found labels in editor
 
+	this.mode = 'normal';	// current editor mode, can be normal, for normal gmail sending
+							// or list, for sending to mailing lists using tags
+							
 	console.log("editor initialized");
+}
+
+Editor.prototype.setLabelElement = function(labelEl, rowEl) {
+	this.labelEl = labelEl;
+	this.rowEl = rowEl;
+	// don't show the label portion on normal mode
+	if(this.mode == 'normal') {
+		this.rowEl.hide();
+	}
+}
+
+Editor.prototype.updateListButton = function(btn) {
+	switch(this.mode) {
+	case 'normal':
+		this.mode = 'mail';
+		btn.text('Send Mail');
+		this.rowEl.show();
+		this.gmailr.hideToRow();
+		this.gmailr.hideCCLine();
+		break;
+	case 'mail':
+		this.mode = 'normal';
+		btn.text('Send to List');
+		this.rowEl.hide();
+		this.gmailr.showToRow();
+		this.gmailr.showCCLine();
+		break;
+	}
 }
 
 Editor.prototype.update = function() {

@@ -12,6 +12,8 @@ $(function() {
 
 	// we only need to insert the top button once, since it just stays hidden in other states
 	var topBtn = G.insertTopButton('Tigervine');
+	// editor object, if we're in the corerct state
+	var editor = null;
 
 	G.observe('send', (function(text) {
 	}).bind(this));
@@ -33,12 +35,24 @@ $(function() {
 			break;
 		case 'compose':
 			// we want to wait a bit before inserting, since DOM needs some time to load
-			G.insertComposeButton('Compose', null);
+			G.insertComposeButton('Send to List', function(el) {
+				el.click(function() {
+					if(editor) {
+						editor.updateListButton(el);
+					}
+				});
+			});
 			this.handleEdit();
 			break;
 		case 'reply':
 			// we want to wait a bit before inserting, since DOM needs some time to load
-			G.insertReplyButton('Reply', null);
+			G.insertReplyButton('Send to List', function(el) {
+				el.click(function() {
+					if(editor) {
+						editor.updateListButton(el);
+					}
+				});
+			});
 			this.handleEdit();
 			break;
 		case 'conversation':
@@ -52,11 +66,11 @@ $(function() {
 	this.handleEdit = function() {
 		// keep trying until we got the text area
 		G.wait('.M9 .editable', function(el) {
-			var textarea = el.contents().find('body');
-			var editor = new Editor(textarea);
-			G.insertEditRow('Labels', function(el) {
+			var textarea = el.eq(0).contents().find('body');
+			editor = new Editor(textarea, G);
+			G.insertEditRow('Labels', function(labelEl, rowEl) {
 				// set the label element in editor so it can start creating labels
-				editor.labelEl = el;
+				editor.setLabelElement(labelEl, rowEl);
 				editor.update();	// update once, just in case if theres already some text in there
 			});
 		});
